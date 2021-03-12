@@ -4,13 +4,13 @@
 #include <ESP8266HTTPClient.h>
 #include <sstream>
 
-const char* ssid = "*******";
-const char* password =  "*******";
-const char* mqttServer = "******";
-const int mqttPort = 1883;
+const char* ssid = "****";
+const char* password =  "*****";
+const char* mqttServer = "****";
+const int mqttPort = 18820;
 const char* mqttUser = "*****";
-const char* mqttPassword = "*****";
-const char* mqttdoor = "triggeropendoor";    
+const char* mqttPassword = "*******";
+const char* mqttdoor = "triggeropendoor";
 const char* mqttstatus = "doorstatus";    //Topic donde se publica el estado del actuador
 
 const int act=5;
@@ -20,7 +20,6 @@ PubSubClient client(espClient);
 
 /* Configuración para conectar a la red WiFi
  Imprime la dirección IP cuando se logra la conexión. */
-
 void setup_Wifi (){
   delay(10);
 
@@ -97,7 +96,7 @@ void setup(){
     Serial.println("Connecting to MQTT...");
  
     if (client.connect("ESP8266Client", mqttUser, mqttPassword )) {  // "ESP8266Cliente": ID con el que se reconoce en el servidor MQTT
-      Serial.println("connected"); 
+      Serial.println("connected");
     } 
     else { 
       Serial.print("failed with state ");
