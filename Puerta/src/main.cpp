@@ -4,6 +4,7 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <sstream>
+#include <REST/REST.h>
 
 const char* ssid = "*******";
 const char* password =  "******";
@@ -113,13 +114,21 @@ void ICACHE_RAM_ATTR sensormessage(){
   if (stat == HIGH)
   {
     Serial.println("Cerrado.");
-    client.publish(mqttstatus,"{\"pattern\": \"doorstatus\", \"data\": \"Cerrado\"}");
+    String RespAPI = apiRest("http://worldtimeapi.org/api/timezone/America/Bogota");
+    String fecha = "\"date\" : " + RespAPI.substring(0, 10) + "," + "\"Hour\" : " + RespAPI.substring(11, 16);
+    String output = "{\"pattern\": \"doorstatus\", \"data\": \"Cerrado\", " + fecha + "}";
+    const char* outc=output.c_str();
+    client.publish(mqttstatus,outc);    
     sensorstat=false;
   }
   else if (stat==LOW)
   {
     Serial.println("Abierto.");
-    client.publish(mqttstatus,"{\"pattern\": \"doorstatus\", \"data\": \"Abierto\"}");
+    String RespAPI = apiRest("http://worldtimeapi.org/api/timezone/America/Bogota");
+    String fecha = "\"date\" : " + RespAPI.substring(0, 10) + "," + "\"Hour\" : " + RespAPI.substring(11, 16);
+    String output = "{\"pattern\": \"doorstatus\", \"data\": \"Abierto\", " + fecha + "}";
+    const char* outc=output.c_str();
+    client.publish(mqttstatus,outc); 
     sensorstat=true;
   }  
 }
